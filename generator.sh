@@ -22,7 +22,7 @@ function writeMain {
   #creates the main asm file and specifies the AVR to use
   touch $fileDir
   echo ";Created by EVESAN" > $fileDir
-  echo ".DEVICE '$device'" >> $fileDir
+  echo ".DEVICE \"$device\"" >> $fileDir
 }
 
 function writeMakeFile {
