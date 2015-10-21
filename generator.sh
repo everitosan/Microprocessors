@@ -46,8 +46,8 @@ function writeMakeFile {
   echo "	\$(AVRDUDE) -U flash:w:main.hex:i" >> $makeFileDir
 
   echo "main.hex:" >> $makeFileDir
-  echo "clean:" >> $makeFileDir
   echo "	clean" >> $makeFileDir
+  echo "	\$(COMPILE)" >> $makeFileDir
   echo "clean:" >> $makeFileDir
   echo "	rm -f main.hex" >> $makeFileDir
   echo "	rm -f main.lst" >> $makeFileDir
