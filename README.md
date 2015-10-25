@@ -28,4 +28,24 @@ $ ./generator.sh
 $ ./generator.sh projectName
 ```
 
+Three actions can be made by the make file: compile, flash and clean.
+
+##### Compile
+ - Will compile the asm code into a .hex file.
+ ```sh
+$ make
+ ```
+
+##### Flash
+- Will load and flash the micro with the .hex code.
+```sh
+$ make flash
+```
+
+##### Clean
+- Will remove the .hex and the .lst generated files.
+```sh
+$ make clean
+```
+
 Feel free to change the generator for your own needs.
