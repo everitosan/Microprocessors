@@ -1,0 +1,64 @@
+gavrasm Gerd's AVR assembler version 3.3 (C)2012 by DG4FAC
+----------------------------------------------------------
+Source file: main.asm
+Hex file:    main.hex
+Eeprom file: main.eep
+Compiled:    26.10.2015, 11:30:47
+Pass:        2
+     1: ;Created by EVESAN
+     2: .DEVICE "ATmega48"; definición del micro a usar para el compilador
+     3: 
+     4: .def a = R16; definimos a como el registro 16
+     5: .def b = R17; definimos b como el registro 17
+     6: .def c = R20; definimos c como el registro 20
+     7: .def modo = R18; definimos mode como el registro 18
+     8: .def led = R19; definimos a led el registro 19
+     9: 
+    10: 
+    11:           .org 0000 ;inicializa el stack
+    12: 000000   EF0F  ldi a, low(RAMEND); carga en a el valor bajo de RAMEND
+    13: 000001   BF0D  out spl, a ; carga el stack pointer low el valor de a
+    14: 000002   E002  ldi a, high(RAMEND); carga en a el valor alto de RAMEND
+    15: 000003   BF0E  out sph, a ; carga el stack pointer high el valor de a
+    16: 
+    17: 000004   EF2F  ldi modo, $FF; cargamos valores altos a modo
+    18: 000005   B92A  out ddrd, modo; usamos el puerto d como salida
+    19: 
+    20: 000006   E031  ldi led, $01; inciamos el led con un $01
+    21: 000007   B93B  out portd, led; mandamos el led a portd
+    22: 000008   D00A  rcall retardo; llamamos al retardo
+    23: 000009   1F33  rol led ; hacemos un corrimiento con acarreo a la izquierda
+    24: 00000A   3830  cpi led, $80 ; comparamos si el valor es igual a 0b10000000
+    25: 00000B   F009  breq der ; si la instrucción anterior es correcta debemos saltar al bloque der
+    26: 00000C   CFFA  rjmp izq ; si la instrucción de comparación no es verdadera, seguimos en el bloque izq
+    27: 
+    28: 00000D   B93B  out portd, led ; umandamos el led a puerto d
+    29: 00000E   D004  rcall retardo ; lammamos al retardo
+    30: 00000F   9537  ror led ; hacemos un corrimiento al a derecha con acarreo
+    31: 000010   3031  cpi led, $01; comparamos si el valor es igual a 0b00000001
+    32: 000011   F3A9  breq izq; si la comparación anterior es verdadera, debemos saltar al bloque de izq
+    33: 000012   CFFA  rjmp der; en caso contrario regresamos al bloque der
+    34: 
+    35: 
+    36: 000013   E34E  ldi c, $3E ;1 CM
+    37: 000014   E30E  ldi a, $3E ; 1 CM
+    38: 000015   E31E  ldi b, $3E ;1 CM
+    39:           ;el bloque loop tarda 1000 CM por cada vez que se llame
+    40: 000016   951A  dec b; 1 (255)
+    41: 000017   3010  cpi b, $00 ;1 (255)
+    42: 000018   F7E9  brne loop ;2 (255)
+    43: 
+    44: 000019   950A  dec a; 1 CM
+    45: 00001A   3000  cpi a, $00  ; 1 CM
+    46: 00001B   F7C9  brne loop2; 2CM branch if not equal
+    47: 00001C   954A  dec c; 1 CM
+    48: 00001D   F7B1  brne loop3; 1CM
+    49: 00001E   9508  ret ;4 CM retorna a dónde fué llamado
+
+Program             :       31 words.
+Constants           :        0 words.
+Total program memory:       31 words.
+Eeprom space        :        0 bytes.
+Data segment        :        0 bytes.
+Compilation completed, no errors.
+Compilation endet 26.10.2015, 11:30:47
