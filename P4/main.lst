@@ -3,7 +3,7 @@ gavrasm Gerd's AVR assembler version 3.3 (C)2012 by DG4FAC
 Source file: main.asm
 Hex file:    main.hex
 Eeprom file: main.eep
-Compiled:    25.10.2015, 19:48:41
+Compiled:    26.10.2015, 10:59:20
 Pass:        2
      1: ;Created by EVESAN
      2: .DEVICE "ATmega48" ;definicion del micro a usar para el compilador
@@ -33,9 +33,9 @@ Pass:        2
     26: 00000C   CFF9  rjmp fin
     27: 
     28: 
-    29: 00000D   E34E  ldi c, $3E ;1 CM
-    30: 00000E   E30E  ldi a, $3E ; 1 CM
-    31: 00000F   E31E  ldi b, $3E ;1 CM
+    29: 00000D   EF47  ldi c, $F7 ;1 CM
+    30: 00000E   EF07  ldi a, $F7 ; 1 CM
+    31: 00000F   EF17  ldi b, $F7 ;1 CM
     32:           ;el bloque loop tarda 1000 CM por cada vez que se llame
     33: 000010   951A  dec b; 1 (255)
     34: 000011   3010  cpi b, $00 ;1 (255)
@@ -47,6 +47,59 @@ Pass:        2
     40: 000016   954A  dec c; 1 CM
     41: 000017   F7B1  brne loop3; 1CM
     42: 000018   9508  ret ;4 CM retorna a dónde fué llamado
+    43: 
+    44: 
+    45: ;          ;Created by EVESAN
+    46: ;          .DEVICE "ATmega48"
+    47: ;
+    48: ;          .def a = R16
+    49: ;          .def b = R17
+    50: ;          .def c = R18
+    51: ;          .def modo = R19
+    52: ;          .def led = R20
+    53: ;          .def ledOff = R21
+    54: ;
+    55: ;                    .org 0000
+    56: ;                    ldi a, low(RAMEND)
+    57: ;                    out spl, a
+    58: ;                    ldi a, high(RAMEND)
+    59: ;                    out sph, a
+    60: ;
+    61: ;                    ldi modo, $FF
+    62: ;                    out ddrd, modo
+    63: ;
+    64: ;          fin:      ldi led, $01
+    65: ;                    out portd, led
+    66: ;                    rcall retardo
+    67: ;                    out portd, ledOff
+    68: ;                    rcall retardo
+    69: ;                    ldi led, $0F
+    70: ;                    out portd, led
+    71: ;                    rcall retardo
+    72: ;                    out portd, ledOff
+    73: ;                    rcall retardo
+    74: ;                    ldi led, $F0
+    75: ;                    out portd, led
+    76: ;                    rcall retardo
+    77: ;                    out portd, ledOff
+    78: ;                    rcall retardo
+    79: ;                    rjmp fin
+    80: ;
+    81: ;
+    82: ;          retardo:  ldi c, $04
+    83: ;          loop3:    ldi a, $FF ; 1 CM
+    84: ;          loop2:    ldi b, $FF ;1 CM
+    85: ;                    ;el bloque loop tarda 1000 CM por cada vez que se llame
+    86: ;          loop:     dec b; 1 (255)
+    87: ;                    cpi b, $00 ;1 (255)
+    88: ;                    brne loop ;2 (255)
+    89: ;
+    90: ;                    dec a; 1 CM
+    91: ;                    cpi a, $00  ; 1 CM
+    92: ;                    brne loop2; 2CM branch if not equal
+    93: ;                    dec c
+    94: ;                    brne loop3
+    95: ;                    ret ;4 CM retorna a dónde fué llamado
 
 Program             :       25 words.
 Constants           :        0 words.
@@ -54,4 +107,4 @@ Total program memory:       25 words.
 Eeprom space        :        0 bytes.
 Data segment        :        0 bytes.
 Compilation completed, no errors.
-Compilation endet 25.10.2015, 19:48:41
+Compilation endet 26.10.2015, 10:59:20

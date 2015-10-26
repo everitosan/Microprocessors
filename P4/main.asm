@@ -26,9 +26,9 @@ fin:      ldi led, $FF; carga un valor de 1 a led
           rjmp fin
 
 
-retardo:  ldi c, $3E ;1 CM
-loop3:    ldi a, $3E ; 1 CM
-loop2:    ldi b, $3E ;1 CM
+retardo:  ldi c, $F6 ;1 CM
+loop3:    ldi a, $F6 ; 1 CM
+loop2:    ldi b, $F6 ;1 CM
           ;el bloque loop tarda 1000 CM por cada vez que se llame
 loop:     dec b; 1 (255)
           cpi b, $00 ;1 (255)
