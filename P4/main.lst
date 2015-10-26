@@ -3,7 +3,7 @@ gavrasm Gerd's AVR assembler version 3.3 (C)2012 by DG4FAC
 Source file: main.asm
 Hex file:    main.hex
 Eeprom file: main.eep
-Compiled:    26.10.2015, 10:59:20
+Compiled:    26.10.2015, 11:28:15
 Pass:        2
      1: ;Created by EVESAN
      2: .DEVICE "ATmega48" ;definicion del micro a usar para el compilador
@@ -24,87 +24,99 @@ Pass:        2
     17: 000005   B92A  out ddrd, mode; configura ddrc como salida
     18: 
     19: 
-    20: 000006   EF3F  ldi led, $FF; carga un valor de 1 a led
+    20: 000006   E031  ldi led, $01; carga un valor de 1 a led
     21: 000007   B93B  out portd, led ; manda a d el contenido de led
-    22: 000008   D004  rcall retardo ; retardo
+    22: 000008   D03A  rcall retardo ; retardo
     23: 000009   E030  ldi led, $00; carga un valor de 0 a led
     24: 00000A   B93B  out portd, led ; manda a d el contenido de led
-    25: 00000B   D001  rcall retardo ; retardo
-    26: 00000C   CFF9  rjmp fin
-    27: 
-    28: 
-    29: 00000D   EF47  ldi c, $F7 ;1 CM
-    30: 00000E   EF07  ldi a, $F7 ; 1 CM
-    31: 00000F   EF17  ldi b, $F7 ;1 CM
-    32:           ;el bloque loop tarda 1000 CM por cada vez que se llame
-    33: 000010   951A  dec b; 1 (255)
-    34: 000011   3010  cpi b, $00 ;1 (255)
-    35: 000012   F7E9  brne loop ;2 (255)
-    36: 
-    37: 000013   950A  dec a; 1 CM
-    38: 000014   3000  cpi a, $00  ; 1 CM
-    39: 000015   F7C9  brne loop2; 2CM branch if not equal
-    40: 000016   954A  dec c; 1 CM
-    41: 000017   F7B1  brne loop3; 1CM
-    42: 000018   9508  ret ;4 CM retorna a dónde fué llamado
-    43: 
-    44: 
-    45: ;          ;Created by EVESAN
-    46: ;          .DEVICE "ATmega48"
-    47: ;
-    48: ;          .def a = R16
-    49: ;          .def b = R17
-    50: ;          .def c = R18
-    51: ;          .def modo = R19
-    52: ;          .def led = R20
-    53: ;          .def ledOff = R21
-    54: ;
-    55: ;                    .org 0000
-    56: ;                    ldi a, low(RAMEND)
-    57: ;                    out spl, a
-    58: ;                    ldi a, high(RAMEND)
-    59: ;                    out sph, a
-    60: ;
-    61: ;                    ldi modo, $FF
-    62: ;                    out ddrd, modo
-    63: ;
-    64: ;          fin:      ldi led, $01
-    65: ;                    out portd, led
-    66: ;                    rcall retardo
-    67: ;                    out portd, ledOff
-    68: ;                    rcall retardo
-    69: ;                    ldi led, $0F
-    70: ;                    out portd, led
-    71: ;                    rcall retardo
-    72: ;                    out portd, ledOff
-    73: ;                    rcall retardo
-    74: ;                    ldi led, $F0
-    75: ;                    out portd, led
-    76: ;                    rcall retardo
-    77: ;                    out portd, ledOff
-    78: ;                    rcall retardo
-    79: ;                    rjmp fin
-    80: ;
-    81: ;
-    82: ;          retardo:  ldi c, $04
-    83: ;          loop3:    ldi a, $FF ; 1 CM
-    84: ;          loop2:    ldi b, $FF ;1 CM
-    85: ;                    ;el bloque loop tarda 1000 CM por cada vez que se llame
-    86: ;          loop:     dec b; 1 (255)
-    87: ;                    cpi b, $00 ;1 (255)
-    88: ;                    brne loop ;2 (255)
-    89: ;
-    90: ;                    dec a; 1 CM
-    91: ;                    cpi a, $00  ; 1 CM
-    92: ;                    brne loop2; 2CM branch if not equal
-    93: ;                    dec c
-    94: ;                    brne loop3
-    95: ;                    ret ;4 CM retorna a dónde fué llamado
+    25: 00000B   D037  rcall retardo ; retardo
+    26: 
+    27: 00000C   E032  ldi led, $02; carga un valor de 2 a led
+    28: 00000D   B93B  out portd, led ; manda a d el contenido de led
+    29: 00000E   D034  rcall retardo ; retardo
+    30: 00000F   E030  ldi led, $00; carga un valor de 0 a led
+    31: 000010   B93B  out portd, led ; manda a d el contenido de led
+    32: 000011   D031  rcall retardo ; retardo
+    33: 
+    34: 000012   E034  ldi led, $04; carga un valor de 4 a led
+    35: 000013   B93B  out portd, led ; manda a d el contenido de led
+    36: 000014   D02E  rcall retardo ; retardo
+    37: 000015   E030  ldi led, $00; carga un valor de 0 a led
+    38: 000016   B93B  out portd, led ; manda a d el contenido de led
+    39: 000017   D02B  rcall retardo ; retardo
+    40: 
+    41: 000018   E038  ldi led, $08; carga un valor de 8 a led
+    42: 000019   B93B  out portd, led ; manda a d el contenido de led
+    43: 00001A   D028  rcall retardo ; retardo
+    44: 00001B   E030  ldi led, $00; carga un valor de 0 a led
+    45: 00001C   B93B  out portd, led ; manda a d el contenido de led
+    46: 00001D   D025  rcall retardo ; retardo
+    47: 
+    48: 00001E   E03F  ldi led, $0F; carga un valor de 15 a led
+    49: 00001F   B93B  out portd, led ; manda a d el contenido de led
+    50: 000020   D022  rcall retardo ; retardo
+    51: 000021   E030  ldi led, $00; carga un valor de 0 a led
+    52: 000022   B93B  out portd, led ; manda a d el contenido de led
+    53: 000023   D01F  rcall retardo ; retardo
+    54: 
+    55: 000024   E130  ldi led, $10; carga un valor de 16 a led
+    56: 000025   B93B  out portd, led ; manda a d el contenido de led
+    57: 000026   D01C  rcall retardo ; retardo
+    58: 000027   E030  ldi led, $00; carga un valor de 0 a led
+    59: 000028   B93B  out portd, led ; manda a d el contenido de led
+    60: 000029   D019  rcall retardo ; retardo
+    61: 
+    62: 00002A   E230  ldi led, $20; carga un valor de 32 a led
+    63: 00002B   B93B  out portd, led ; manda a d el contenido de led
+    64: 00002C   D016  rcall retardo ; retardo
+    65: 00002D   E030  ldi led, $00; carga un valor de 0 a led
+    66: 00002E   B93B  out portd, led ; manda a d el contenido de led
+    67: 00002F   D013  rcall retardo ; retardo
+    68: 
+    69: 000030   E430  ldi led, $40; carga un valor de 64 a led
+    70: 000031   B93B  out portd, led ; manda a d el contenido de led
+    71: 000032   D010  rcall retardo ; retardo
+    72: 000033   E030  ldi led, $00; carga un valor de 0 a led
+    73: 000034   B93B  out portd, led ; manda a d el contenido de led
+    74: 000035   D00D  rcall retardo ; retardo
+    75: 
+    76: 000036   E830  ldi led, $80; carga un valor de 128 a led
+    77: 000037   B93B  out portd, led ; manda a d el contenido de led
+    78: 000038   D00A  rcall retardo ; retardo
+    79: 000039   E030  ldi led, $00; carga un valor de 0 a led
+    80: 00003A   B93B  out portd, led ; manda a d el contenido de led
+    81: 00003B   D007  rcall retardo ; retardo
+    82: 
+    83: 00003C   EF30  ldi led, $F0; carga un valor de 240 a led
+    84: 00003D   B93B  out portd, led ; manda a d el contenido de led
+    85: 00003E   D004  rcall retardo ; retardo
+    86: 00003F   E030  ldi led, $00; carga un valor de 0 a led
+    87: 000040   B93B  out portd, led ; manda a d el contenido de led
+    88: 000041   D001  rcall retardo ; retardo
+    89: 
+    90: 
+    91: 000042   CFC3  rjmp fin
+    92: 
+    93: 
+    94: 000043   E340  ldi c, $30 ;1 CM
+    95: 000044   E300  ldi a, $30 ; 1 CM
+    96: 000045   E310  ldi b, $30 ;1 CM
+    97:           ;el bloque loop tarda 1000 CM por cada vez que se llame
+    98: 000046   951A  dec b; 1 (255)
+    99: 000047   3010  cpi b, $00 ;1 (255)
+   100: 000048   F7E9  brne loop ;2 (255)
+   101: 
+   102: 000049   950A  dec a; 1 CM
+   103: 00004A   3000  cpi a, $00  ; 1 CM
+   104: 00004B   F7C9  brne loop2; 2CM branch if not equal
+   105: 00004C   954A  dec c; 1 CM
+   106: 00004D   F7B1  brne loop3; 1CM
+   107: 00004E   9508  ret ;4 CM retorna a dónde fué llamado
 
-Program             :       25 words.
+Program             :       79 words.
 Constants           :        0 words.
-Total program memory:       25 words.
+Total program memory:       79 words.
 Eeprom space        :        0 bytes.
 Data segment        :        0 bytes.
 Compilation completed, no errors.
-Compilation endet 26.10.2015, 10:59:20
+Compilation endet 26.10.2015, 11:28:15
