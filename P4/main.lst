@@ -1,0 +1,57 @@
+gavrasm Gerd's AVR assembler version 3.3 (C)2012 by DG4FAC
+----------------------------------------------------------
+Source file: main.asm
+Hex file:    main.hex
+Eeprom file: main.eep
+Compiled:    25.10.2015, 19:48:41
+Pass:        2
+     1: ;Created by EVESAN
+     2: .DEVICE "ATmega48" ;definicion del micro a usar para el compilador
+     3: 
+     4: .def a = R16; definimos a como el registro 16
+     5: .def b = R17; definimos b como el registro 17
+     6: .def c = R20; definimos c como el registro 20
+     7: .def mode = R18; definimos mode como el registro 18
+     8: .def led = R19; definimos a led el registro 19
+     9: 
+    10:           .org 0000 ;inicializa el stack
+    11: 000000   EF0F  ldi a, low(RAMEND); carga en a el valor bajo de RAMEND
+    12: 000001   BF0D  out spl, a ; carga el stack pointer low el valor de a
+    13: 000002   E002  ldi a, high(RAMEND); carga en a el valor alto de RAMEND
+    14: 000003   BF0E  out sph, a ; carga el stack pointer high el valor de a
+    15: 
+    16: 000004   EF2F  ldi mode, $FF; carga R17 con nivel alto
+    17: 000005   B92A  out ddrd, mode; configura ddrc como salida
+    18: 
+    19: 
+    20: 000006   EF3F  ldi led, $FF; carga un valor de 1 a led
+    21: 000007   B93B  out portd, led ; manda a d el contenido de led
+    22: 000008   D004  rcall retardo ; retardo
+    23: 000009   E030  ldi led, $00; carga un valor de 0 a led
+    24: 00000A   B93B  out portd, led ; manda a d el contenido de led
+    25: 00000B   D001  rcall retardo ; retardo
+    26: 00000C   CFF9  rjmp fin
+    27: 
+    28: 
+    29: 00000D   E34E  ldi c, $3E ;1 CM
+    30: 00000E   E30E  ldi a, $3E ; 1 CM
+    31: 00000F   E31E  ldi b, $3E ;1 CM
+    32:           ;el bloque loop tarda 1000 CM por cada vez que se llame
+    33: 000010   951A  dec b; 1 (255)
+    34: 000011   3010  cpi b, $00 ;1 (255)
+    35: 000012   F7E9  brne loop ;2 (255)
+    36: 
+    37: 000013   950A  dec a; 1 CM
+    38: 000014   3000  cpi a, $00  ; 1 CM
+    39: 000015   F7C9  brne loop2; 2CM branch if not equal
+    40: 000016   954A  dec c; 1 CM
+    41: 000017   F7B1  brne loop3; 1CM
+    42: 000018   9508  ret ;4 CM retorna a dónde fué llamado
+
+Program             :       25 words.
+Constants           :        0 words.
+Total program memory:       25 words.
+Eeprom space        :        0 bytes.
+Data segment        :        0 bytes.
+Compilation completed, no errors.
+Compilation endet 25.10.2015, 19:48:41
